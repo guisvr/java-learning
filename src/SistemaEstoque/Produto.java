@@ -54,6 +54,10 @@ public class Produto {
         public int getQuantidadeEstoque(){
             return this.quantidadeEstoque;
         }
+
+        public String getNome(){
+            return this.nome;
+        }
     }
 
 
