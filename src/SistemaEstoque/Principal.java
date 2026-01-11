@@ -40,9 +40,9 @@ public class Principal {
 
                 case 2:
 
-                realizarBusca(listaDeProdutos, leitura);
-                break;
-                  
+                    realizarBusca(listaDeProdutos, leitura);
+                    break;
+
                 case 3:
 
                     System.out.println("Qual item deseja remover?");
@@ -62,6 +62,8 @@ public class Principal {
                     System.out.println("Quantidade em estoque: ");
                     int qtdNovo = leitura.nextInt();
 
+                    leitura.nextLine();
+
                     Produto pNovo = new Produto(nomeNovo, precoNovo, qtdNovo);
                     listaDeProdutos.add(pNovo);
 
@@ -70,11 +72,7 @@ public class Principal {
 
                 case 5:
 
-                    double total = 0;
-                    for (Produto p : listaDeProdutos) {
-                        total += (p.getPreco() * p.getQuantidadeEstoque());
-                    }
-                    System.out.println("O valor total do estoque é: R$" + total);
+                    calcularPatrimonio(listaDeProdutos);
                     break;
 
                 case 6:
@@ -107,23 +105,31 @@ public class Principal {
         System.out.println("1. Ver relatório");
         System.out.println("2. Buscar produto");
         System.out.println("3. Remover produto");
-        System.out.println("4. Valor Total");
-        System.out.println("5. Adicionar produto");
+        System.out.println("4. Adicionar produto");
+        System.out.println("5. Patrimônio total");
         System.out.println("6. Sair");
         System.out.print("Escolha uma opção: ");
         System.out.println();
     }
 
     public static void realizarBusca(ArrayList<Produto> lista, Scanner sc) {
-    System.out.print("Nome para busca: ");
-    String nome = sc.nextLine();
-    
-    for (Produto p : lista) {
-        if (p.getNome().equalsIgnoreCase(nome)) {
-            p.exibirInformações();
-            return;
+        System.out.print("Nome para busca: ");
+        String nome = sc.nextLine();
+
+        for (Produto p : lista) {
+            if (p.getNome().equalsIgnoreCase(nome)) {
+                p.exibirInformações();
+                return;
+            }
         }
+        System.out.println("Não encontrado.");
     }
-    System.out.println("Não encontrado.");
-}
+
+    public static void calcularPatrimonio(ArrayList<Produto> lista) {
+        double total = 0;
+        for (Produto p : lista) {
+            total += (p.getPreco() * p.getQuantidadeEstoque());
+        }
+        System.out.println("O valor total do estoque é: R$" + total);
+    }
 }
