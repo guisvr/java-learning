@@ -31,47 +31,22 @@ public class Principal {
 
             switch (opcao) {
                 case 1:
-                    System.out.println("RELATÓRIO");
-                    for (Produto p : listaDeProdutos) {
-                        p.exibirInformações();
-                        System.out.println();
-                    }
+                    exibirRelatorio(listaDeProdutos);
                     break;
 
                 case 2:
-
                     realizarBusca(listaDeProdutos, leitura);
                     break;
 
                 case 3:
-
-                    System.out.println("Qual item deseja remover?");
-                    String remover = leitura.nextLine();
-                    listaDeProdutos.removeIf(p -> p.getNome().equalsIgnoreCase(remover));
-                    System.out.println("Item removido.");
+                    removerProduto(listaDeProdutos, leitura);
                     break;
 
                 case 4:
-
-                    System.out.println("Nome do produto: ");
-                    String nomeNovo = leitura.nextLine();
-
-                    System.out.println("Preço: R$");
-                    double precoNovo = leitura.nextDouble();
-
-                    System.out.println("Quantidade em estoque: ");
-                    int qtdNovo = leitura.nextInt();
-
-                    leitura.nextLine();
-
-                    Produto pNovo = new Produto(nomeNovo, precoNovo, qtdNovo);
-                    listaDeProdutos.add(pNovo);
-
-                    System.out.println("Produto cadastrado.");
+                    cadastrarProduto(listaDeProdutos, leitura);
                     break;
 
                 case 5:
-
                     calcularPatrimonio(listaDeProdutos);
                     break;
 
@@ -112,6 +87,14 @@ public class Principal {
         System.out.println();
     }
 
+    public static void exibirRelatorio(ArrayList<Produto> lista) {
+        System.out.println("RELATÓRIO");
+        for (Produto p : lista) {
+            p.exibirInformações();
+            System.out.println();
+        }
+    }
+
     public static void realizarBusca(ArrayList<Produto> lista, Scanner sc) {
         System.out.print("Nome para busca: ");
         String nome = sc.nextLine();
@@ -125,6 +108,31 @@ public class Principal {
         System.out.println("Não encontrado.");
     }
 
+    public static void removerProduto(ArrayList<Produto> lista, Scanner sc) {
+        System.out.println("Qual item deseja remover?");
+        String remover = sc.nextLine();
+        lista.removeIf(p -> p.getNome().equalsIgnoreCase(remover));
+        System.out.println("Item removido.");
+    }
+
+    public static void cadastrarProduto(ArrayList<Produto> lista, Scanner sc) {
+        System.out.println("Nome do produto: ");
+        String nomeNovo = sc.nextLine();
+
+        System.out.println("Preço: R$");
+        double precoNovo = sc.nextDouble();
+
+        System.out.println("Quantidade em estoque: ");
+        int qtdNovo = sc.nextInt();
+
+        sc.nextLine();
+
+        Produto pNovo = new Produto(nomeNovo, precoNovo, qtdNovo);
+        lista.add(pNovo);
+
+        System.out.println("Produto cadastrado.");
+    }
+
     public static void calcularPatrimonio(ArrayList<Produto> lista) {
         double total = 0;
         for (Produto p : lista) {
@@ -132,4 +140,5 @@ public class Principal {
         }
         System.out.println("O valor total do estoque é: R$" + total);
     }
+
 }
