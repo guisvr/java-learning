@@ -2,6 +2,7 @@ package SistemaEstoque;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
+
 import java.util.ArrayList;
 
 public class Principal {
@@ -15,12 +16,16 @@ public class Principal {
         Produto p3 = new Produto("Mesa", 1000, 15);
         Produto p4 = new Produto("Sofá", 2000, 5);
         Produto p5 = new Produto("Cortina", 150, 13);
+        ProdutoPerecivel p6 = new ProdutoPerecivel("Leite", 6, 200, "13/01/2026");
 
         listaDeProdutos.add(p1);
         listaDeProdutos.add(p2);
         listaDeProdutos.add(p3);
         listaDeProdutos.add(p4);
         listaDeProdutos.add(p5);
+        listaDeProdutos.add(p6);
+
+        aplicarDescontoPerecivel(listaDeProdutos);
 
         int opcao = 0;
         while (opcao != 7) {
@@ -56,6 +61,10 @@ public class Principal {
                         break;
 
                     case 7:
+                        verificarEstoqueCritico(listaDeProdutos);
+                        break;
+
+                    case 8:
                         System.out.println("Encerrando programa.");
                         break;
 
@@ -93,7 +102,8 @@ public class Principal {
         System.out.println("4. Adicionar produto");
         System.out.println("5. Patrimônio total");
         System.out.println("6. Exibir estatisticas.");
-        System.out.println("7. Sair");
+        System.out.println("7. verificar estoque crítico.");
+        System.out.println("8. Sair");
         System.out.print("Escolha uma opção: ");
         System.out.println();
     }
@@ -191,7 +201,8 @@ public class Principal {
                 maisCaro = p;
             }
         }
-        System.out.println("Produto de maior valor no estoque: " + maisCaro.getNome() + "(" + maisCaro.getPreco() + ").");
+        System.out
+                .println("Produto de maior valor no estoque: " + maisCaro.getNome() + "(" + maisCaro.getPreco() + ").");
     }
 
     public static void exibirMenorQtd(ArrayList<Produto> lista) {
@@ -206,7 +217,8 @@ public class Principal {
                 menorQtd = p;
             }
         }
-        System.out.println("Produto com menor quantidade em estoque: " + menorQtd.getNome() + "(" + menorQtd.getQuantidadeEstoque() + ").");
+        System.out.println("Produto com menor quantidade em estoque: " + menorQtd.getNome() + "("
+                + menorQtd.getQuantidadeEstoque() + ").");
     }
 
     public static void exibirMediaPrecos(ArrayList<Produto> lista) {
@@ -232,5 +244,39 @@ public class Principal {
         exibirMaisCaro(lista);
         exibirMenorQtd(lista);
         exibirMediaPrecos(lista);
+    }
+
+    public static void aplicarDescontoPerecivel(ArrayList<Produto> lista) {
+        System.out.println("DESCONTO DE 10% EM PERECÍVEIS");
+
+        for (Produto p : lista) {
+            if (p instanceof ProdutoPerecivel) {
+                p.reajustarPreco(-10);
+                System.out.println("Desconto aplicado no produto: " + p.getNome());
+            }
+        }
+    }
+
+    public static void verificarEstoqueCritico(ArrayList<Produto> lista){
+        System.out.println("ALERTA DE ESTOQUE CRÍTICO");
+        boolean encontrouCritico = false;
+
+        for (Produto p : lista){
+            int limiteCritico;
+
+            if (p instanceof ProdutoPerecivel){
+                limiteCritico = 20;
+            }else {
+                limiteCritico = 10;
+            }
+
+            if (p.getQuantidadeEstoque() < limiteCritico){
+                System.out.println("Produtos como estoque crítico:\n" + p.getNome() + " | Qtd: " + p.getQuantidadeEstoque());
+                encontrouCritico = true;
+            }
+        }
+        if (!encontrouCritico){
+            System.out.println("Nenhum item em nível críticio.");
+        }
     }
 }
