@@ -17,6 +17,7 @@ public class Principal {
         Produto p4 = new ProdutoComum("Sofá", 2000, 5);
         Produto p5 = new ProdutoComum("Cortina", 150, 13);
         ProdutoPerecivel p6 = new ProdutoPerecivel("Leite", 6, 200, "13/01/2026");
+        ProdutoLimpeza p7 = new ProdutoLimpeza("Detergente", 2.50, 50);
 
         listaDeProdutos.add(p1);
         listaDeProdutos.add(p2);
@@ -24,6 +25,7 @@ public class Principal {
         listaDeProdutos.add(p4);
         listaDeProdutos.add(p5);
         listaDeProdutos.add(p6);
+        listaDeProdutos.add(p7);
 
         // aplicarDescontoPerecivel(listaDeProdutos);
 
