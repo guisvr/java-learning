@@ -15,4 +15,8 @@ public class ProdutoPerecivel extends Produto{
         System.out.println("Data de validade: " + dataValidade);
     }
 
+    @Override
+    public double calcularImposto(){
+        return this.getPreco() * 0.05;
+    }
 }

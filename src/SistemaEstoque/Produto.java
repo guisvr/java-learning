@@ -1,6 +1,6 @@
 package SistemaEstoque;
 
-public class Produto {
+public abstract class Produto {
 
     private String nome;
     private double preco;
@@ -58,7 +58,7 @@ public class Produto {
         public String getNome(){
             return this.nome;
         }
-        
+        public abstract double calcularImposto();
     }
 
 

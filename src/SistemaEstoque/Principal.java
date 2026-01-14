@@ -11,11 +11,11 @@ public class Principal {
         Scanner leitura = new Scanner(System.in);
         ArrayList<Produto> listaDeProdutos = new ArrayList<>();
 
-        Produto p1 = new Produto("Cadeira", 450, 30);
-        Produto p2 = new Produto("Tapete", 200, 10);
-        Produto p3 = new Produto("Mesa", 1000, 15);
-        Produto p4 = new Produto("Sofá", 2000, 5);
-        Produto p5 = new Produto("Cortina", 150, 13);
+        Produto p1 = new ProdutoComum("Cadeira", 450, 30);
+        Produto p2 = new ProdutoComum("Tapete", 200, 10);
+        Produto p3 = new ProdutoComum("Mesa", 1000, 15);
+        Produto p4 = new ProdutoComum("Sofá", 2000, 5);
+        Produto p5 = new ProdutoComum("Cortina", 150, 13);
         ProdutoPerecivel p6 = new ProdutoPerecivel("Leite", 6, 200, "13/01/2026");
 
         listaDeProdutos.add(p1);
@@ -112,6 +112,8 @@ public class Principal {
         System.out.println("RELATÓRIO");
         for (Produto p : lista) {
             p.exibirInformações();
+
+            System.out.println("Total de impostos a pagar. R$" + p.calcularImposto());
             System.out.println();
         }
     }
@@ -175,7 +177,7 @@ public class Principal {
             }
         }
         sc.nextLine();
-        Produto pNovo = new Produto(nomeNovo, precoNovo, qtdNovo);
+        Produto pNovo = new ProdutoComum(nomeNovo, precoNovo, qtdNovo);
         lista.add(pNovo);
 
         System.out.println("Produto cadastrado.");
@@ -240,10 +242,17 @@ public class Principal {
             System.out.println("Não há dados para exibir estatisticas.");
             return;
         }
+
+        double totalImpostos = 0;
+        for (Produto p : lista) {
+            totalImpostos += p.calcularImposto();
+        }
         System.out.println("ESTATÍSTICAS");
         exibirMaisCaro(lista);
         exibirMenorQtd(lista);
         exibirMediaPrecos(lista);
+
+        System.out.println("Total de impostos a pagar: R$" + totalImpostos);
     }
 
     public static void aplicarDescontoPerecivel(ArrayList<Produto> lista) {
@@ -257,25 +266,26 @@ public class Principal {
         }
     }
 
-    public static void verificarEstoqueCritico(ArrayList<Produto> lista){
+    public static void verificarEstoqueCritico(ArrayList<Produto> lista) {
         System.out.println("ALERTA DE ESTOQUE CRÍTICO");
         boolean encontrouCritico = false;
 
-        for (Produto p : lista){
+        for (Produto p : lista) {
             int limiteCritico;
 
-            if (p instanceof ProdutoPerecivel){
+            if (p instanceof ProdutoPerecivel) {
                 limiteCritico = 20;
-            }else {
+            } else {
                 limiteCritico = 10;
             }
 
-            if (p.getQuantidadeEstoque() < limiteCritico){
-                System.out.println("Produtos como estoque crítico:\n" + p.getNome() + " | Qtd: " + p.getQuantidadeEstoque());
+            if (p.getQuantidadeEstoque() < limiteCritico) {
+                System.out.println(
+                        "Produtos como estoque crítico:\n" + p.getNome() + " | Qtd: " + p.getQuantidadeEstoque());
                 encontrouCritico = true;
             }
         }
-        if (!encontrouCritico){
+        if (!encontrouCritico) {
             System.out.println("Nenhum item em nível críticio.");
         }
     }
